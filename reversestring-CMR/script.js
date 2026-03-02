@@ -4,17 +4,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultArea = document.getElementById('resultArea');
     const copyBtn = document.getElementById('copyBtn');
 
+    // Listen for typing to count characters and show/hide the button
+    input.addEventListener('input', () => {
+        // We use trim() to ignore leading/trailing spaces in the count
+        const text = input.value.trim(); 
+        
+        // Check if the character count is greater than 3
+        if (text.length > 3) {
+            reverseBtn.classList.remove('d-none');
+        } else {
+            // Hide the button if 3 or fewer characters
+            reverseBtn.classList.add('d-none');
+            
+            // Clear the results and hide the copy button if the user deletes characters
+            resultArea.textContent = "";
+            copyBtn.classList.add('d-none');
+        }
+    });
+
     // Function to reverse the string
     reverseBtn.addEventListener('click', () => {
         const text = input.value;
         
-        if (text.trim() === "") {
-            resultArea.textContent = "Please enter some text first!";
-            copyBtn.classList.add('d-none');
-            return;
-        }
-
-        // Logic: Split into array -> reverse array -> join back to string
+        // Split into array -> reverse array -> join back to string
         const reversed = text.split('').reverse().join('');
         
         // Display result
